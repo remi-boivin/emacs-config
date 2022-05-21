@@ -188,7 +188,7 @@
 
        :config
        ;;literate
-       (default +bindings +smartparens))
+ ;; bootstrap straight.el
 (defvar bootstrap-version)
 (let ((bootstrap-file
        (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
@@ -200,18 +200,19 @@
          'silent 'inhibit-cookies)
       (goto-char (point-max))
       (eval-print-last-sexp)))
-  (load bootstrap-file nil 'nomessage))
-  (setq package-enable-at-startup nil)
-  (straight-use-package 'el-patch)
-(load bootstrap-file nil 'nomessage))(add-hook 'prog-mode-hook 'copilot-mode)
-  
-  (use-package copilot
+
+;; install copilot.el
+(use-package copilot
   :straight (:host github :repo "zerolfx/copilot.el"
                    :files ("dist" "copilot.el"))
   :ensure t)
+
+;; enable completion automatically
+(load bootstrap-file nil 'nomessage))(add-hook 'prog-mode-hook 'copilot-mode)
+
 ;; enable completion in insert mode
 (customize-set-variable 'copilot-enable-predicates '(evil-insert-state-p))
-
+)
 ; complete by copilot first, then company-mode
 (defun my-tab ()
   (interactive)
